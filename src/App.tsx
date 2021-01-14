@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{FC,useContext} from 'react';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
+import Page404 from './pages/404';
+import About from './pages/About';
+import Homepage from './pages/Homepage';
 
-function App() {
+import { LangContext } from './context/lang';
+
+
+
+const App:FC = ()=>{
+  const {dispatch:{translate}} = useContext(LangContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router basename="/react-multilang-website">
+      <Switch>
+        <Route path="/" exact >
+          <Homepage translate={translate}/>
+        </Route>
+        <Route path="/about" exact>
+          <About translate={translate}/>
+        </Route>
+        <Route path="*">
+          <Page404 translate={translate}/>
+        </Route>
+      </Switch>
+    </Router>
+  )
 }
 
 export default App;
